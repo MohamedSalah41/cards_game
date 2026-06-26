@@ -5,12 +5,8 @@ import { Card } from "../models/Card.js";
 import { createShuffledCards } from "../utils/cardFactory.js";
 import { UIRenderer } from "../ui/UIRenderer.js";
 
-const FLIP_REVEAL_DELAY = 1000; // ms to show mismatched cards before hiding
+const FLIP_REVEAL_DELAY = 1000;
 
-/**
- * GameController — orchestrates all game logic.
- * Implements IGame and wires together cards, audio, progress and UI.
- */
 export class GameController implements IGame {
   private cards: Card[] = [];
   private flippedCards: Card[] = [];
@@ -21,8 +17,6 @@ export class GameController implements IGame {
     private readonly tracker: IProgressTracker,
     private readonly ui: UIRenderer
   ) {}
-
-  // ─── IGame ────────────────────────────────────────────────────────────────
 
   start(): void {
     this.cards = createShuffledCards();
@@ -45,19 +39,16 @@ export class GameController implements IGame {
     const card = this.cards.find((c) => c.id === cardId);
     if (!card || card.isFlipped || card.isMatched) return;
 
-    // Flip the card
     card.flip();
     card.updateDOM();
     this.audio.playFlip();
     this.flippedCards.push(card);
 
     if (this.flippedCards.length === 2) {
-      this.isLocked = true; // disable further clicks while evaluating
+      this.isLocked = true;
       this.evaluate();
     }
   }
-
-  // ─── Private logic ────────────────────────────────────────────────────────
 
   private evaluate(): void {
     const [first, second] = this.flippedCards as [Card, Card];

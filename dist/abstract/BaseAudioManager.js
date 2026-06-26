@@ -1,13 +1,7 @@
-/**
- * BaseAudioManager — abstract class that handles the common
- * HTMLAudioElement loading pattern.
- * Subclasses supply the actual audio file paths.
- */
 export class BaseAudioManager {
     constructor() {
         this.loadAll();
     }
-    /** Load all audio assets — called once in the constructor. */
     loadAll() {
         this.bgAudio = this.createAudio(this.backgroundSrc(), true);
         this.flipAudio = this.createAudio(this.flipSrc());
@@ -21,9 +15,7 @@ export class BaseAudioManager {
         return audio;
     }
     playBackground() {
-        this.bgAudio.play().catch(() => {
-            // autoplay policy may block; user interaction is needed first
-        });
+        this.bgAudio.play().catch(() => { });
     }
     stopBackground() {
         this.bgAudio.pause();
@@ -32,11 +24,11 @@ export class BaseAudioManager {
     toggleBackground() {
         if (this.bgAudio.paused) {
             this.bgAudio.play().catch(() => { });
-            return false; // not muted
+            return false;
         }
         else {
             this.bgAudio.pause();
-            return true; // muted
+            return true;
         }
     }
     playFlip() {
@@ -48,7 +40,6 @@ export class BaseAudioManager {
     playMismatch() {
         this.cloneAndPlay(this.mismatchAudio);
     }
-    /** Clone so sounds can overlap without interruption. */
     cloneAndPlay(audio) {
         const clone = audio.cloneNode();
         clone.play().catch(() => { });

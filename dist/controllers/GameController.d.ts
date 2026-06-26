@@ -2,10 +2,6 @@ import { IGame } from "../interfaces/IGame.js";
 import { IAudioManager } from "../interfaces/IAudioManager.js";
 import { IProgressTracker } from "../interfaces/IProgressTracker.js";
 import { UIRenderer } from "../ui/UIRenderer.js";
-/**
- * GameController — orchestrates all game logic.
- * Implements IGame and wires together cards, audio, progress and UI.
- */
 export declare class GameController implements IGame {
     private readonly audio;
     private readonly tracker;

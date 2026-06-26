@@ -1,9 +1,5 @@
 import { BaseAudioManager } from "../abstract/BaseAudioManager.js";
 
-/**
- * AudioManager — concrete implementation of BaseAudioManager.
- * Supplies the real audio asset paths.
- */
 export class AudioManager extends BaseAudioManager {
   protected backgroundSrc(): string {
     return "assets/audio/fulltrack.mp3";

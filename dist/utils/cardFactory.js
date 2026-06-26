@@ -1,12 +1,7 @@
 import { Card } from "../models/Card.js";
 import { shuffle } from "./shuffle.js";
-const TOTAL_PAIRS = 6; // 6 pairs → 12 cards (3 cols × 4 rows)
-// Valid image indices — explicitly excludes 3, 5, 10
-const VALID_PAIR_IDS = [1, 2, 4, 6, 7, 8];
-/**
- * Builds and shuffles 12 Card instances using only the allowed images.
- * Back image : assets/images/0.jpg
- */
+const TOTAL_PAIRS = 3;
+const VALID_PAIR_IDS = [1, 2, 4];
 export function createShuffledCards() {
     const cards = [];
     let idCounter = 0;

@@ -1,10 +1,5 @@
 import { IAudioManager } from "../interfaces/IAudioManager.js";
 
-/**
- * BaseAudioManager — abstract class that handles the common
- * HTMLAudioElement loading pattern.
- * Subclasses supply the actual audio file paths.
- */
 export abstract class BaseAudioManager implements IAudioManager {
   protected bgAudio!: HTMLAudioElement;
   protected flipAudio!: HTMLAudioElement;
@@ -15,7 +10,6 @@ export abstract class BaseAudioManager implements IAudioManager {
     this.loadAll();
   }
 
-  /** Load all audio assets — called once in the constructor. */
   protected loadAll(): void {
     this.bgAudio = this.createAudio(this.backgroundSrc(), true);
     this.flipAudio = this.createAudio(this.flipSrc());
@@ -30,16 +24,13 @@ export abstract class BaseAudioManager implements IAudioManager {
     return audio;
   }
 
-  /** Subclasses declare the paths. */
   protected abstract backgroundSrc(): string;
   protected abstract flipSrc(): string;
   protected abstract matchSrc(): string;
   protected abstract mismatchSrc(): string;
 
   playBackground(): void {
-    this.bgAudio.play().catch(() => {
-      // autoplay policy may block; user interaction is needed first
-    });
+    this.bgAudio.play().catch(() => {});
   }
 
   stopBackground(): void {
@@ -50,10 +41,10 @@ export abstract class BaseAudioManager implements IAudioManager {
   toggleBackground(): boolean {
     if (this.bgAudio.paused) {
       this.bgAudio.play().catch(() => {});
-      return false; // not muted
+      return false;
     } else {
       this.bgAudio.pause();
-      return true; // muted
+      return true;
     }
   }
 
@@ -69,7 +60,6 @@ export abstract class BaseAudioManager implements IAudioManager {
     this.cloneAndPlay(this.mismatchAudio);
   }
 
-  /** Clone so sounds can overlap without interruption. */
   private cloneAndPlay(audio: HTMLAudioElement): void {
     const clone = audio.cloneNode() as HTMLAudioElement;
     clone.play().catch(() => {});

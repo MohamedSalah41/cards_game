@@ -1,9 +1,5 @@
 import { IProgressTracker } from "../interfaces/IProgressTracker.js";
 
-/**
- * ProgressTracker — keeps score of matched pairs and
- * exposes a percentage for the progress bar.
- */
 export class ProgressTracker implements IProgressTracker {
   private _matchedPairs: number = 0;
 

@@ -1,9 +1,5 @@
 import { createShuffledCards } from "../utils/cardFactory.js";
-const FLIP_REVEAL_DELAY = 1000; // ms to show mismatched cards before hiding
-/**
- * GameController — orchestrates all game logic.
- * Implements IGame and wires together cards, audio, progress and UI.
- */
+const FLIP_REVEAL_DELAY = 1000;
 export class GameController {
     constructor(audio, tracker, ui) {
         this.audio = audio;
@@ -13,7 +9,6 @@ export class GameController {
         this.flippedCards = [];
         this.isLocked = false;
     }
-    // ─── IGame ────────────────────────────────────────────────────────────────
     start() {
         this.cards = createShuffledCards();
         this.flippedCards = [];
@@ -33,17 +28,15 @@ export class GameController {
         const card = this.cards.find((c) => c.id === cardId);
         if (!card || card.isFlipped || card.isMatched)
             return;
-        // Flip the card
         card.flip();
         card.updateDOM();
         this.audio.playFlip();
         this.flippedCards.push(card);
         if (this.flippedCards.length === 2) {
-            this.isLocked = true; // disable further clicks while evaluating
+            this.isLocked = true;
             this.evaluate();
         }
     }
-    // ─── Private logic ────────────────────────────────────────────────────────
     evaluate() {
         const [first, second] = this.flippedCards;
         if (first.pairId === second.pairId) {
