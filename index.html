@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Card Game</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+
+  <body>
+    <!-- ── Background is set via CSS on body ── -->
+
+    <div class="app">
+
+      <!-- Header -->
+      <header class="header">
+        <h1 class="header__title">Memory Card Game</h1>
+        <button id="restart-btn" class="btn btn--restart">↺ Restart</button>
+      </header>
+
+      <!-- Progress bar -->
+      <section class="progress" aria-label="Match progress">
+        <div class="progress-bar">
+          <div id="progress-bar__fill" class="progress-bar__fill"></div>
+        </div>
+        <span id="progress-text" class="progress__text">0%</span>
+      </section>
+
+      <!-- Card board: 4 × 5 grid → 20 cards -->
+      <main id="game-board" class="game-board" role="main" aria-label="Card grid"></main>
+
+      <!-- Win overlay -->
+      <div id="win-banner" class="win-banner hidden" role="alert">
+        <div class="win-banner__box">
+          <h2>🎉 You Won!</h2>
+          <p>All pairs matched!</p>
+          <button id="play-again-btn" class="btn btn--play-again">Play Again</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Compiled TypeScript output -->
+    <script type="module" src="dist/main.js"></script>
+
+    <!-- Play-again wires to restart (same controller) -->
+    <script type="module">
+      document.getElementById('play-again-btn')?.addEventListener('click', () => {
+        document.getElementById('restart-btn')?.click();
+      });
+    </script>
+  </body>
+</html>

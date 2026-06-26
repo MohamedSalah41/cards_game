@@ -1,0 +1,201 @@
+/* ─── Reset & Base ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  min-height: 100vh;
+
+  /* Background image */
+  background-image: url('../assets/brain.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  /* Fallback gradient if image is missing */
+  background-color: #1a1a2e;
+
+  color: #eee;
+}
+
+/* Dark overlay so cards remain readable */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 0;
+}
+
+/* ─── App wrapper ──────────────────────────────────────────────────────── */
+.app {
+  position: relative;
+  z-index: 1;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__title {
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ─── Buttons ──────────────────────────────────────────────────────────── */
+.btn {
+  padding: 10px 22px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.1s, opacity 0.2s;
+}
+.btn:hover  { opacity: 0.85; }
+.btn:active { transform: scale(0.96); }
+
+.btn--restart    { background: #e94560; color: #fff; }
+.btn--play-again { background: #0f3460; color: #fff; font-size: 1.1rem; }
+
+/* ─── Progress bar ─────────────────────────────────────────────────────── */
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 18px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+.progress-bar__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #43e97b, #38f9d7);
+  border-radius: 9px;
+  transition: width 0.4s ease;
+}
+
+.progress__text {
+  min-width: 42px;
+  text-align: right;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+/* ─── Game board — 4-column grid ───────────────────────────────────────── */
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* ─── Card ─────────────────────────────────────────────────────────────── */
+.card {
+  aspect-ratio: 2 / 3;
+  cursor: pointer;
+  perspective: 900px;
+  border-radius: 12px;
+  transition: transform 0.1s;
+}
+
+.card:hover:not(.card--matched) {
+  transform: translateY(-4px) scale(1.02);
+}
+
+.card__inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 12px;
+}
+
+/* Flip when .card--flipped is added */
+.card--flipped .card__inner {
+  transform: rotateY(180deg);
+}
+
+.card__back,
+.card__front {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.card__back  { background: #16213e; }
+.card__front { transform: rotateY(180deg); background: #0f3460; }
+
+.card__back  img,
+.card__front img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 12px;
+}
+
+/* Matched cards get a green glow */
+.card--matched .card__inner {
+  box-shadow: 0 0 18px 4px #43e97b;
+}
+.card--matched { cursor: default; }
+
+/* ─── Win banner ───────────────────────────────────────────────────────── */
+.win-banner {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.win-banner.hidden { display: none; }
+
+.win-banner__box {
+  background: #16213e;
+  border: 2px solid #43e97b;
+  border-radius: 20px;
+  padding: 48px 56px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: pop-in 0.3s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.win-banner__box h2 { font-size: 2.2rem; }
+.win-banner__box p  { font-size: 1.1rem; color: #aaa; }
+
+@keyframes pop-in {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ─── Responsive tweaks ────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .game-board { grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .header__title { font-size: 1.2rem; }
+}

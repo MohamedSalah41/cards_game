@@ -1,0 +1,12 @@
+{
+  "name": "memory-card-game",
+  "version": "1.0.0",
+  "description": "Memory card game built with TypeScript",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
