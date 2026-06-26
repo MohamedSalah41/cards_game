@@ -47,6 +47,16 @@ export abstract class BaseAudioManager implements IAudioManager {
     this.bgAudio.currentTime = 0;
   }
 
+  toggleBackground(): boolean {
+    if (this.bgAudio.paused) {
+      this.bgAudio.play().catch(() => {});
+      return false; // not muted
+    } else {
+      this.bgAudio.pause();
+      return true; // muted
+    }
+  }
+
   playFlip(): void {
     this.cloneAndPlay(this.flipAudio);
   }

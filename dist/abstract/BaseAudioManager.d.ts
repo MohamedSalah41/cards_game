@@ -20,6 +20,7 @@ export declare abstract class BaseAudioManager implements IAudioManager {
     protected abstract mismatchSrc(): string;
     playBackground(): void;
     stopBackground(): void;
+    toggleBackground(): boolean;
     playFlip(): void;
     playMatch(): void;
     playMismatch(): void;

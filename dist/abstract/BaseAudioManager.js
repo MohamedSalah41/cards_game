@@ -29,6 +29,16 @@ export class BaseAudioManager {
         this.bgAudio.pause();
         this.bgAudio.currentTime = 0;
     }
+    toggleBackground() {
+        if (this.bgAudio.paused) {
+            this.bgAudio.play().catch(() => { });
+            return false; // not muted
+        }
+        else {
+            this.bgAudio.pause();
+            return true; // muted
+        }
+    }
     playFlip() {
         this.cloneAndPlay(this.flipAudio);
     }
